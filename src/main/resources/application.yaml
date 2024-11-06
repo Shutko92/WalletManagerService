@@ -1,0 +1,22 @@
+server:
+  port: 9001
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        ddl-auto: none
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+
+  liquibase:
+    change-log: classpath:db.changelog/db.changelog-master.yaml
+    enabled: true
