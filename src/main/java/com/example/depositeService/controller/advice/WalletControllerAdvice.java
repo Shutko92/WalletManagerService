@@ -2,6 +2,7 @@ package com.example.depositeService.controller.advice;
 
 import com.example.depositeService.exception.ErrorResponse;
 import com.example.depositeService.exception.ExceptionMessage;
+import com.example.depositeService.exception.UserNotFoundException;
 import com.example.depositeService.exception.WalletNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class WalletControllerAdvice {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({WalletNotFoundException.class})
+    @ExceptionHandler({WalletNotFoundException.class, UserNotFoundException.class})
     public ResponseEntity<ErrorResponse> handleNotFoundException(Exception e, WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), HttpStatus.NOT_FOUND, request);
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);

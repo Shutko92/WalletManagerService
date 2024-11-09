@@ -4,6 +4,7 @@ import com.example.depositeService.dto.OperationRequest;
 import com.example.depositeService.dto.OperationResponse;
 import com.example.depositeService.dto.WalletInfoResponse;
 import com.example.depositeService.entity.Wallet;
+import com.example.depositeService.exception.UserNotFoundException;
 import com.example.depositeService.exception.WalletNotFoundException;
 import com.example.depositeService.exception.WithdrawalNotPossibleException;
 import com.example.depositeService.mapper.WalletMapper;
@@ -81,6 +82,9 @@ public class WalletService {
 
     public List<WalletInfoResponse> getWallets(String clientId) {
         List<Wallet> wallets = depositRepository.findAllByOwnerIdAndDeletedIsFalse(UUID.fromString(clientId));
+        if (wallets.isEmpty()) {
+            throw new UserNotFoundException();
+        }
 
         return walletMapper.toWalletInfoResponse(wallets);
     }
